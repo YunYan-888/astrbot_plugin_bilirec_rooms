@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+*.bak.*
+*_config.json
+.env
