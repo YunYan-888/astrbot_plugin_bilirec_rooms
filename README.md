@@ -1,0 +1,2 @@
+# astrbot_plugin_bilirec_rooms
+通过astrbot使得可以从QQ等软件上直接控制录播姬
