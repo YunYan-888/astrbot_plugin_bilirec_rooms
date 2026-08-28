@@ -1,0 +1,87 @@
+{
+    "api_url": {
+        "description": "录播姬 API 地址",
+        "type": "string",
+        "default": "http://172.17.0.1:2356/api/room",
+        "hint": "录播姬 WebAPI 的房间列表接口地址，通常为 http://IP:端口/api/room"
+    },
+    "auth_user": {
+        "description": "HTTP Basic Auth 用户名",
+        "type": "string",
+        "default": "",
+        "hint": "录播姬设置的 HTTP 基本认证用户名，留空则从环境变量 BILIREC_USER 读取"
+    },
+    "auth_pass": {
+        "description": "HTTP Basic Auth 密码",
+        "type": "string",
+        "default": "",
+        "secret": true,
+        "hint": "录播姬设置的 HTTP 基本认证密码，留空则从环境变量 BILIREC_PASS 读取"
+    },
+    "timeout": {
+        "description": "请求超时时间(秒)",
+        "type": "int",
+        "default": 10,
+        "hint": "调用录播姬 API 的最大等待时间，单位秒"
+    },
+    "compose_path": {
+        "description": "docker compose 工作目录",
+        "type": "string",
+        "default": "/opt/BililiveRecorder-webhook-docker",
+        "hint": "录播姬 docker-compose.yml 所在目录的绝对路径"
+    },
+    "compose_file": {
+        "description": "compose 文件名",
+        "type": "string",
+        "default": "compose.yml",
+        "hint": "docker compose 配置文件名，如 compose.yml 或 docker-compose.yml"
+    },
+    "restart_service": {
+        "description": "要重启的服务名称",
+        "type": "string",
+        "default": "webhook",
+        "hint": "docker compose 中定义的服务名，restart 命令将作用于此服务"
+    },
+    "whitelist": {
+        "description": "用户ID白名单",
+        "type": "list",
+        "default": [],
+        "hint": "留空表示所有人都可使用指令；填写后仅列表中的用户ID可执行操作"
+    },
+    "docker_sock": {
+        "description": "docker.sock 路径（容器内视角）",
+        "type": "string",
+        "default": "/var/run/docker.sock",
+        "hint": "宿主机 docker.sock 挂载到容器内的路径，默认为 /var/run/docker.sock"
+    },
+    "cmd_help": {
+        "description": "帮助指令名称",
+        "type": "string",
+        "default": "录播姬帮助",
+        "hint": "触发帮助信息的指令关键词，不含参数"
+    },
+    "cmd_status": {
+        "description": "查询状态指令名称",
+        "type": "string",
+        "default": "查询录播姬",
+        "hint": "触发查询录制状态的指令关键词，不含参数"
+    },
+    "cmd_add": {
+        "description": "添加录制指令名称",
+        "type": "string",
+        "default": "添加录制",
+        "hint": "触发添加房间的指令关键词，不含参数，使用时需加空格接房间号或昵称"
+    },
+    "cmd_remove": {
+        "description": "删除录制指令名称",
+        "type": "string",
+        "default": "删除录制",
+        "hint": "触发删除房间的指令关键词，不含参数，使用时需加空格接房间号或昵称"
+    },
+    "cmd_restart": {
+        "description": "重启服务指令名称",
+        "type": "string",
+        "default": "重启录播姬",
+        "hint": "触发重启录播姬服务的指令关键词，不含参数"
+    }
+}
