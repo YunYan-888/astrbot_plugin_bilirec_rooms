@@ -2,6 +2,6 @@ name: astrbot_plugin_bilirec_rooms
 display_name: 录播姬助手
 short_desc: 管理B站直播间录制
 desc: 可以通过聊天控制服务器上运行的b站录播姬，包括重启录播姬、查询录制状态、新增删除直播间
-version: "1.6.1"
+version: "1.6.2"
 author: 云上归雁
 repo: "https://github.com/YunYan-888/astrbot_plugin_bilirec_rooms"
