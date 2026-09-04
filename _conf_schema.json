@@ -39,8 +39,8 @@
     "restart_service": {
         "description": "要重启的服务名称",
         "type": "string",
-        "default": "webhook",
-        "hint": "docker compose 中定义的服务名，restart 命令将作用于此服务"
+        "default": "",
+        "hint": "docker compose 中定义的服务名。留空则自动查找包含 BililiveRecorder 的容器并重启（兼容官方独立部署和自定义合并镜像）"
     },
     "whitelist": {
         "description": "用户ID白名单",
@@ -54,12 +54,6 @@
         "default": "/var/run/docker.sock",
         "hint": "宿主机 docker.sock 挂载到容器内的路径，默认为 /var/run/docker.sock"
     },
-    "cmd_help": {
-        "description": "帮助指令名称",
-        "type": "string",
-        "default": "录播姬帮助",
-        "hint": "触发帮助信息的指令关键词，不含参数"
-    },
     "cmd_status": {
         "description": "查询状态指令名称",
         "type": "string",
@@ -69,19 +63,49 @@
     "cmd_add": {
         "description": "添加录制指令名称",
         "type": "string",
-        "default": "添加录制",
+        "default": "添加直播间",
         "hint": "触发添加房间的指令关键词，不含参数，使用时需加空格接房间号或昵称"
     },
     "cmd_remove": {
         "description": "删除录制指令名称",
         "type": "string",
-        "default": "删除录制",
+        "default": "删除直播间",
         "hint": "触发删除房间的指令关键词，不含参数，使用时需加空格接房间号或昵称"
+    },
+    "cmd_start_rec": {
+        "description": "开始录制指令名称",
+        "type": "string",
+        "default": "开始录制",
+        "hint": "触发手动开始录制指定直播间的指令关键词，后接房间号或UP主名"
+    },
+    "cmd_stop_rec": {
+        "description": "停止录制指令名称",
+        "type": "string",
+        "default": "停止录制",
+        "hint": "触发手动停止录制指定直播间的指令关键词，后接房间号或UP主名"
+    },
+    "cmd_auto_on": {
+        "description": "开启自动录制指令名称",
+        "type": "string",
+        "default": "开启自动录制",
+        "hint": "触发开启指定直播间自动录制的指令关键词，后接房间号或UP主名"
+    },
+    "cmd_auto_off": {
+        "description": "关闭自动录制指令名称",
+        "type": "string",
+        "default": "关闭自动录制",
+        "hint": "触发关闭指定直播间自动录制的指令关键词，后接房间号或UP主名"
     },
     "cmd_restart": {
         "description": "重启服务指令名称",
         "type": "string",
         "default": "重启录播姬",
         "hint": "触发重启录播姬服务的指令关键词，不含参数"
+    },
+    "cmd_help": {
+        "description": "帮助指令名称",
+        "type": "string",
+        "default": "录播姬帮助",
+        "hint": "触发帮助信息的指令关键词，不含参数"
     }
 }

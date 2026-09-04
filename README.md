@@ -3,9 +3,10 @@
 > 作者QQ：1361485017
 
 
-
 AstrBot 插件，用于通过聊天指令管理 BililiveRecorder（录播姬）的直播间录制任务。
-录播姬请自行拉取镜像安装
+录播姬请自行拉取镜像下载。
+
+> ⚠️ **适配说明**：本插件仅在 Linux 环境下配合 QQ 消息平台进行过测试，其他操作系统或消息平台可能存在兼容性问题，欢迎反馈。
 
 ## 功能特性
 
@@ -14,6 +15,12 @@ AstrBot 插件，用于通过聊天指令管理 BililiveRecorder（录播姬）�
 - 从录制列表中移除直播间（支持房间号或 UP 主昵称）
 - 重启录播姬 webhook 服务
 - 可配置的指令名称和白名单权限控制
+- 开启/关闭指定直播间的自动录制
+- 手动开始/停止录制指定直播间（含开播状态和录制状态校验）
+- 重启服务支持自动识别录播姬容器（无需填写服务名）
+- 开启/关闭指定直播间的自动录制
+- 手动开始/停止录制指定直播间（含开播状态和录制状态校验）
+- 重启服务支持自动识别录播姬容器（无需填写服务名）
 
 ## 配置说明
 
@@ -27,7 +34,7 @@ AstrBot 插件，用于通过聊天指令管理 BililiveRecorder（录播姬）�
 | `timeout` | int | `10` | API 请求超时时间（秒） |
 | `compose_path` | string | `/opt/BililiveRecorder-webhook-docker` | docker compose 工作目录绝对路径 |
 | `compose_file` | string | `compose.yml` | compose 配置文件名 |
-| `restart_service` | string | `webhook` | docker compose 中要重启的服务名 |
+| `restart_service` | string | （空） | docker compose 中要重启的服务名。**留空则自动查找**包含 BililiveRecorder 的容器 |
 | `docker_sock` | string | `/var/run/docker.sock` | 容器内 docker.sock 挂载路径 |
 | `whitelist` | list | `[]` | 用户 ID 白名单。**留空表示所有人都可使用**；填写后仅列表中的用户可执行操作 |
 | `cmd_help` | string | `录播姬帮助` | 帮助指令名称 |
@@ -35,6 +42,10 @@ AstrBot 插件，用于通过聊天指令管理 BililiveRecorder（录播姬）�
 | `cmd_add` | string | `添加录制` | 添加录制指令名称（不含参数） |
 | `cmd_remove` | string | `删除录制` | 删除录制指令名称（不含参数） |
 | `cmd_restart` | string | `重启录播姬` | 重启服务指令名称 |
+| `cmd_auto_on` | string | `开启自动录制` | 开启自动录制指令名称 |
+| `cmd_auto_off` | string | `关闭自动录制` | 关闭自动录制指令名称 |
+| `cmd_start_rec` | string | `开始录制` | 手动开始录制指令名称 |
+| `cmd_stop_rec` | string | `停止录制` | 手动停止录制指令名称 |
 
 ### 关于白名单
 
@@ -44,7 +55,7 @@ AstrBot 插件，用于通过聊天指令管理 BililiveRecorder（录播姬）�
 
 ### 关于自定义指令
 
-修改 `cmd_help`、`cmd_status`、`cmd_add`、`cmd_remove`、`cmd_restart` 的值即可更改触发关键词。修改后需重启 AstrBot 生效。注意：`@filter.command` 装饰器中的硬编码名称仍作为底层匹配，配置中的名称用于帮助文本显示和参数解析前缀匹配。
+修改 `cmd_help`、`cmd_status`、`cmd_add`、`cmd_remove`、`cmd_restart`、`cmd_auto_on`、`cmd_auto_off`、`cmd_start_rec`、`cmd_stop_rec` 的值即可更改触发关键词。修改后需重启 AstrBot 生效。注意：`@filter.command` 装饰器中的硬编码名称仍作为底层匹配，配置中的名称用于帮助文本显示和参数解析前缀匹配。
 
 ## 指令使用方法
 
@@ -110,34 +121,4 @@ UP 主昵称需与 B 站用户名**完全匹配**。若存在同名用户，优�
 
 ## 更新日志
 
-### v1.6.0
-- 新增：支持通过 UP 主昵称添加/删除录制房间
-- 新增：添加录制时自动开启 autoRecord
-- 新增：指令名称可通过配置自定义
-- 新增：白名单留空时默认所有人可用
-- 优化：强制指令与参数之间加空格，避免误触发
-- 修复：认证凭据为空导致 API 调用假成功的问题
-
-### v1.5.0
-- 新增：添加录制时传入 autoRecord 参数，新建房间自动开启录制
-- 优化：统一使用 HTTP API 操作房间，不再直接编辑配置文件
-
-### v1.4.0
-- 新增：配置项支持填写录播姬 HTTP Basic Auth 用户名和密码
-- 新增：支持从环境变量 BILIREC_USER / BILIREC_PASS 读取认证凭据
-- 优化：认证失败时返回明确错误提示
-
-### v1.3.0
-- 重构：通讯方式改为 docker-py + docker.sock，替代 shell 命令调用
-- 优化：重启服务时通过 compose label 精确定位目标容器
-- 修复：多项目环境下可能误重启其他容器的问题
-
-### v1.2.0
-- 新增：白名单权限控制功能
-- 新增：配置项 whitelist 支持指定允许使用指令的用户 ID 列表
-- 优化：非白名单用户执行指令时返回权限拒绝提示
-
-### v1.0.0
-- 首发版本
-- 新增：查询录播姬运行状态及所有直播间录制详情
-- 新增：重启录播姬 webhook 服务功能
+更新内容请查看 [CHANGELOG.md](CHANGELOG.md)
