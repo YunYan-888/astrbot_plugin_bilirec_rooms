@@ -409,7 +409,7 @@ class BilirecRooms(Star):
                     return
                 logger.info(f"[BiliRec] 自动识别到录播姬容器: {target.name} ({target.short_id})")
             logger.info(f"[BiliRec] 找到目标容器: {target.name} ({target.short_id}), 执行 restart")
-            target.restart(timeout=30)
+            await asyncio.to_thread(target.restart, timeout=30)
             logger.info(f"[BiliRec] 容器 {target.name} 重启成功")
             yield event.plain_result(f"✅ 录播姬服务重启成功！\n容器: {target.name} ({target.short_id})")
         except docker.errors.APIError as e:

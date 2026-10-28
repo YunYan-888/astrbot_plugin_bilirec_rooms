@@ -1,4 +1,7 @@
 # 更新日志
+## v1.7.1
+- 修复：重启录播姬容器时同步调用 `docker restart` 阻塞 AstrBot 事件循环，导致其他插件（如 majsoul_monitor）轮询任务静默死亡的问题
+- 优化：将 `target.restart()` 改为 `await asyncio.to_thread(target.restart, timeout=30)`，消除同步阻塞
 ## v1.7.0
 - 新增：开启/关闭指定直播间自动录制指令（`开启自动录制` / `关闭自动录制`）
 - 新增：手动开始/停止录制指定直播间指令（`开始录制` / `停止录制`）
